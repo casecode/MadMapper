@@ -60,7 +60,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 1" id="7O3-4A-y9c"/>
+                    <tabBarItem key="tabBarItem" title="Map" image="earth-america-7.png" id="7O3-4A-y9c"/>
                     <connections>
                         <outlet property="mapView" destination="ew3-Y4-Blg" id="DHD-Ny-Oiz"/>
                     </connections>
@@ -89,4 +89,7 @@
             <point key="canvasLocation" x="-348" y="108"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="earth-america-7.png" width="30" height="30"/>
+    </resources>
 </document>

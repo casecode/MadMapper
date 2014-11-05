@@ -15,6 +15,7 @@
 		4860590A1A086C8A00AD132B /* MadMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486059091A086C8A00AD132B /* MadMapperTests.swift */; };
 		48C9E1F81A093DEB00F0CA6A /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48C9E1F71A093DEB00F0CA6A /* MapKit.framework */; };
 		48C9E1FA1A093E5F00F0CA6A /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C9E1F91A093E5F00F0CA6A /* MapVC.swift */; };
+		48C9E1FD1A09B13900F0CA6A /* earth-america-7.png in Resources */ = {isa = PBXBuildFile; fileRef = 48C9E1FC1A09B13900F0CA6A /* earth-america-7.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,7 @@
 		486059091A086C8A00AD132B /* MadMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MadMapperTests.swift; sourceTree = "<group>"; };
 		48C9E1F71A093DEB00F0CA6A /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		48C9E1F91A093E5F00F0CA6A /* MapVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
+		48C9E1FC1A09B13900F0CA6A /* earth-america-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "earth-america-7.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				486058EF1A086C8A00AD132B /* Info.plist */,
+				48C9E1FC1A09B13900F0CA6A /* earth-america-7.png */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -213,6 +216,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				486058F91A086C8A00AD132B /* Main.storyboard in Resources */,
+				48C9E1FD1A09B13900F0CA6A /* earth-america-7.png in Resources */,
 				486058FE1A086C8A00AD132B /* LaunchScreen.xib in Resources */,
 				486058FB1A086C8A00AD132B /* Images.xcassets in Resources */,
 			);
