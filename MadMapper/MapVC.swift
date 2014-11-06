@@ -82,4 +82,9 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         annotationView.rightCalloutAccessoryView = addReminderButton
         return annotationView
     }
+    
+    func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, calloutAccessoryControlTapped control: UIControl!) {
+        let addReminderVC = self.storyboard?.instantiateViewControllerWithIdentifier("AddReminderVC") as AddReminderVC
+        self.presentViewController(addReminderVC, animated: true, completion: nil)
+    }
 }
