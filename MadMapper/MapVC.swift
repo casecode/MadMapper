@@ -18,6 +18,8 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reminderAdded:", name: "ReminderAdded", object: nil)
+        
         let longPress = UILongPressGestureRecognizer(target: self, action: "didLongPressMap:")
         self.mapView.addGestureRecognizer(longPress)
 
@@ -25,6 +27,10 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         self.locationManager.delegate = self
         
         self.handleLocationManagerAuthorization()
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 
     func handleLocationManagerAuthorization() {
@@ -58,6 +64,13 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         }
     }
     
+    func reminderAdded(notification: NSNotification) {
+        if let geoRegion = notification.userInfo?["region"] as? CLCircularRegion {
+            let overlay = MKCircle(centerCoordinate: geoRegion.center, radius: geoRegion.radius)
+            self.mapView.addOverlay(overlay)
+        }
+    }
+    
     // MARK: - CLLocationManagerDelegate
     
     func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
@@ -70,6 +83,16 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         default:
             println("Default")
         }
+    }
+    
+    func locationManager(manager: CLLocationManager!, didEnterRegion region: CLRegion!) {
+        let regionName = region.identifier
+        println("Region entered: \(regionName)")
+    }
+    
+    func locationManager(manager: CLLocationManager!, didExitRegion region: CLRegion!) {
+        let regionName = region.identifier
+        println("Region exited: \(regionName)")
     }
     
     // MARK: - MKMapViewDelegate
@@ -85,6 +108,14 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, calloutAccessoryControlTapped control: UIControl!) {
         let addReminderVC = self.storyboard?.instantiateViewControllerWithIdentifier("AddReminderVC") as AddReminderVC
+        addReminderVC.locationManager = self.locationManager
+        addReminderVC.selectedAnnotation = view.annotation
         self.presentViewController(addReminderVC, animated: true, completion: nil)
+    }
+    
+    func mapView(mapView: MKMapView!, rendererForOverlay overlay: MKOverlay!) -> MKOverlayRenderer! {
+        let renderer = MKCircleRenderer(overlay: overlay)
+        renderer.fillColor = UIColor.blueColor().colorWithAlphaComponent(0.2)
+        return renderer
     }
 }

@@ -7,11 +7,15 @@
 //
 
 import UIKit
+import MapKit
 
 class AddReminderVC: UIViewController {
 
     @IBOutlet weak var reminderNameTextField: UITextField!
     @IBOutlet weak var radiusTextField: UITextField!
+    
+    var locationManager: CLLocationManager!
+    var selectedAnnotation: MKAnnotation!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,23 +24,22 @@ class AddReminderVC: UIViewController {
     }
 
     @IBAction func addReminder(sender: AnyObject) {
-        var reminderName = ""
-        var reminderRadius = 1000.0
-        
-        let name = self.reminderNameTextField.text
-        
-        if name.isEmpty {
+        var reminderName = self.reminderNameTextField.text
+        if reminderName.isEmpty {
             self.reminderNameTextField.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.5)
             return
-        } else {
-            reminderName = name
         }
         
-        let radius = NSString(string: self.radiusTextField.text).doubleValue
-        if radius > 0 {
-            reminderRadius = radius
-        }
+        var reminderRadius = 1000.0
+        let inputRadius = NSString(string: self.radiusTextField.text).doubleValue
+        if inputRadius > 0 { reminderRadius = inputRadius }
         
-        println("name: \(reminderName) | radius: \(reminderRadius)")
+        let geoRegion = CLCircularRegion(center: self.selectedAnnotation.coordinate, radius: reminderRadius, identifier: reminderName)
+        self.locationManager.startMonitoringForRegion(geoRegion)
+        
+        let info = ["region" : geoRegion]
+        NSNotificationCenter.defaultCenter().postNotificationName("ReminderAdded", object: self, userInfo: info)
+        
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
 }
