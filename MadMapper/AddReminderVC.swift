@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import CoreData
 
 class AddReminderVC: UIViewController {
 
@@ -16,11 +17,13 @@ class AddReminderVC: UIViewController {
     
     var locationManager: CLLocationManager!
     var selectedAnnotation: MKAnnotation!
+    var managedObjectContext: NSManagedObjectContext!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
+        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        self.managedObjectContext = appDelegate.managedObjectContext
     }
 
     @IBAction func addReminder(sender: AnyObject) {
@@ -36,6 +39,19 @@ class AddReminderVC: UIViewController {
         
         let geoRegion = CLCircularRegion(center: self.selectedAnnotation.coordinate, radius: reminderRadius, identifier: reminderName)
         self.locationManager.startMonitoringForRegion(geoRegion)
+        
+        let reminder = NSEntityDescription.insertNewObjectForEntityForName("Reminder", inManagedObjectContext: self.managedObjectContext) as Reminder
+        reminder.name = reminderName
+        reminder.createdDate = NSDate()
+        reminder.latitude = self.selectedAnnotation.coordinate.latitude
+        reminder.longitude = self.selectedAnnotation.coordinate.longitude
+        reminder.radius = reminderRadius
+        
+        var error: NSError? = nil
+        self.managedObjectContext.save(&error)
+        if (error != nil) {
+            println("Error saving reminder: \(error?.localizedDescription)")
+        }
         
         let info = ["region" : geoRegion]
         NSNotificationCenter.defaultCenter().postNotificationName("ReminderAdded", object: self, userInfo: info)

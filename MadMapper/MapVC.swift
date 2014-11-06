@@ -34,7 +34,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     }
 
     func handleLocationManagerAuthorization() {
-        println("Authorization Status:")
+        println("Authorization status:")
         switch CLLocationManager.authorizationStatus() as CLAuthorizationStatus {
         case .Authorized:
             println("Authorized")
@@ -74,7 +74,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     // MARK: - CLLocationManagerDelegate
     
     func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        println("Authorization Status Changed To:")
+        println("Authorization status changed to:")
         
         switch status {
         case .Authorized:
@@ -93,6 +93,13 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     func locationManager(manager: CLLocationManager!, didExitRegion region: CLRegion!) {
         let regionName = region.identifier
         println("Region exited: \(regionName)")
+    }
+    
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+        if let location = locations.last as? CLLocation {
+            println("Current location: lat \(location.coordinate.latitude), long \(location.coordinate.longitude)")
+            
+        }
     }
     
     // MARK: - MKMapViewDelegate
