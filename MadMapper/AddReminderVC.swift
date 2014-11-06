@@ -58,4 +58,9 @@ class AddReminderVC: UIViewController {
         
         self.dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    @IBAction func cancelReminder(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
 }
