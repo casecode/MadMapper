@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		483471001A0B44AA0096DBC5 /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483470FF1A0B44AA0096DBC5 /* Reminder.swift */; };
 		483471041A0B4ABA0096DBC5 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 483471031A0B4ABA0096DBC5 /* CloudKit.framework */; };
+		483471061A0B4E770096DBC5 /* note-write-7.png in Resources */ = {isa = PBXBuildFile; fileRef = 483471051A0B4E770096DBC5 /* note-write-7.png */; };
+		4834710E1A0B514B0096DBC5 /* ReminderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4834710D1A0B514B0096DBC5 /* ReminderCell.swift */; };
+		483471101A0B52170096DBC5 /* RemindersListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4834710F1A0B52170096DBC5 /* RemindersListVC.swift */; };
 		486058F11A086C8A00AD132B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486058F01A086C8A00AD132B /* AppDelegate.swift */; };
 		486058F41A086C8A00AD132B /* MadMapper.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 486058F21A086C8A00AD132B /* MadMapper.xcdatamodeld */; };
 		486058F91A086C8A00AD132B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 486058F71A086C8A00AD132B /* Main.storyboard */; };
@@ -35,6 +38,9 @@
 		483470FF1A0B44AA0096DBC5 /* Reminder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
 		483471021A0B4AA30096DBC5 /* MadMapper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = MadMapper.entitlements; sourceTree = "<group>"; };
 		483471031A0B4ABA0096DBC5 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		483471051A0B4E770096DBC5 /* note-write-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "note-write-7.png"; sourceTree = "<group>"; };
+		4834710D1A0B514B0096DBC5 /* ReminderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderCell.swift; sourceTree = "<group>"; };
+		4834710F1A0B52170096DBC5 /* RemindersListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemindersListVC.swift; sourceTree = "<group>"; };
 		486058EB1A086C8A00AD132B /* MadMapper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MadMapper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		486058EF1A086C8A00AD132B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		486058F01A086C8A00AD132B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -79,6 +85,14 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
+		4834710C1A0B51330096DBC5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4834710D1A0B514B0096DBC5 /* ReminderCell.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		486058E21A086C8A00AD132B = {
 			isa = PBXGroup;
 			children = (
@@ -102,14 +116,15 @@
 		486058ED1A086C8A00AD132B /* MadMapper */ = {
 			isa = PBXGroup;
 			children = (
-				483471021A0B4AA30096DBC5 /* MadMapper.entitlements */,
 				48C9E1FB1A093E6E00F0CA6A /* ViewControllers */,
 				483471011A0B44FC0096DBC5 /* Models */,
+				4834710C1A0B51330096DBC5 /* Views */,
 				486058F01A086C8A00AD132B /* AppDelegate.swift */,
 				486058F71A086C8A00AD132B /* Main.storyboard */,
 				486058FA1A086C8A00AD132B /* Images.xcassets */,
 				486058FC1A086C8A00AD132B /* LaunchScreen.xib */,
 				486058F21A086C8A00AD132B /* MadMapper.xcdatamodeld */,
+				483471021A0B4AA30096DBC5 /* MadMapper.entitlements */,
 				486058EE1A086C8A00AD132B /* Supporting Files */,
 			);
 			path = MadMapper;
@@ -120,6 +135,7 @@
 			children = (
 				486058EF1A086C8A00AD132B /* Info.plist */,
 				48C9E1FC1A09B13900F0CA6A /* earth-america-7.png */,
+				483471051A0B4E770096DBC5 /* note-write-7.png */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -146,6 +162,7 @@
 			children = (
 				48C9E1F91A093E5F00F0CA6A /* MapVC.swift */,
 				48C9E1FE1A09B2CE00F0CA6A /* AddReminderVC.swift */,
+				4834710F1A0B52170096DBC5 /* RemindersListVC.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -242,6 +259,7 @@
 				486058F91A086C8A00AD132B /* Main.storyboard in Resources */,
 				48C9E1FD1A09B13900F0CA6A /* earth-america-7.png in Resources */,
 				486058FE1A086C8A00AD132B /* LaunchScreen.xib in Resources */,
+				483471061A0B4E770096DBC5 /* note-write-7.png in Resources */,
 				486058FB1A086C8A00AD132B /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -260,7 +278,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				483471101A0B52170096DBC5 /* RemindersListVC.swift in Sources */,
 				486058F11A086C8A00AD132B /* AppDelegate.swift in Sources */,
+				4834710E1A0B514B0096DBC5 /* ReminderCell.swift in Sources */,
 				48C9E1FA1A093E5F00F0CA6A /* MapVC.swift in Sources */,
 				48C9E1FF1A09B2CE00F0CA6A /* AddReminderVC.swift in Sources */,
 				486058F41A086C8A00AD132B /* MadMapper.xcdatamodeld in Sources */,

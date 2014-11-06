@@ -5,10 +5,10 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Item 2-->
+        <!--Reminders List-->
         <scene sceneID="TSL-xF-s8g">
             <objects>
-                <viewController id="MdZ-Pv-xMe" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RemindersListVC" title="Reminders List" id="MdZ-Pv-xMe" customClass="RemindersListVC" customModule="MadMapper" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="P8i-NF-SWh"/>
                         <viewControllerLayoutGuide type="bottom" id="4tw-Qr-hxJ"/>
@@ -16,18 +16,105 @@
                     <view key="view" contentMode="scaleToFill" id="mft-G7-yUs">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="c9e-nv-arC">
+                                <rect key="frame" x="0.0" y="20" width="600" height="531"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReminderCell" id="1Bc-dU-gd1" customClass="ReminderCell" customModule="MadMapper" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1Bc-dU-gd1" id="57m-xy-Vo6">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="reminderName" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uuz-Gc-KKd">
+                                                    <rect key="frame" x="8" y="11" width="113" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="abG-Fn-kGp"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="createdDate" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xbz-S8-sbg">
+                                                    <rect key="frame" x="499" y="11" width="93" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="InS-eq-B0j"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Italic" family="Helvetica Neue" pointSize="17"/>
+                                                    <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Added:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gQ5-RZ-2k2">
+                                                    <rect key="frame" x="435" y="11" width="56" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="7mn-we-PhP"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Italic" family="Helvetica Neue" pointSize="17"/>
+                                                    <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottomMargin" secondItem="gQ5-RZ-2k2" secondAttribute="bottom" constant="3" id="3gs-F5-9AN"/>
+                                                <constraint firstAttribute="centerY" secondItem="uuz-Gc-KKd" secondAttribute="centerY" id="Efk-dx-OEw"/>
+                                                <constraint firstAttribute="centerY" secondItem="gQ5-RZ-2k2" secondAttribute="centerY" id="I1b-ns-GEH"/>
+                                                <constraint firstItem="xbz-S8-sbg" firstAttribute="trailing" secondItem="57m-xy-Vo6" secondAttribute="trailingMargin" id="Lsl-0Z-aTR"/>
+                                                <constraint firstItem="xbz-S8-sbg" firstAttribute="top" secondItem="57m-xy-Vo6" secondAttribute="topMargin" constant="3" id="SS9-x9-34p"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="xbz-S8-sbg" secondAttribute="bottom" constant="3" id="Ztv-Uk-EuX"/>
+                                                <constraint firstAttribute="centerY" secondItem="xbz-S8-sbg" secondAttribute="centerY" id="cOB-6D-M9D"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="uuz-Gc-KKd" secondAttribute="bottom" constant="3" id="idO-wj-D2i"/>
+                                                <constraint firstItem="uuz-Gc-KKd" firstAttribute="top" secondItem="57m-xy-Vo6" secondAttribute="topMargin" constant="3" id="mqm-hX-54h"/>
+                                                <constraint firstItem="xbz-S8-sbg" firstAttribute="leading" secondItem="gQ5-RZ-2k2" secondAttribute="trailing" constant="8" id="rQl-gy-DZb"/>
+                                                <constraint firstItem="gQ5-RZ-2k2" firstAttribute="top" secondItem="57m-xy-Vo6" secondAttribute="topMargin" constant="3" id="tum-fu-aGx"/>
+                                                <constraint firstItem="uuz-Gc-KKd" firstAttribute="leading" secondItem="57m-xy-Vo6" secondAttribute="leadingMargin" id="xxW-ee-Luu"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="createdDateLabel" destination="xbz-S8-sbg" id="ki0-TK-7KZ"/>
+                                            <outlet property="reminderNameLabel" destination="uuz-Gc-KKd" id="3JS-wn-GK4"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="MdZ-Pv-xMe" id="7ST-Bt-hmK"/>
+                                    <outlet property="delegate" destination="MdZ-Pv-xMe" id="Qa5-vQ-xAq"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="c9e-nv-arC" firstAttribute="leading" secondItem="mft-G7-yUs" secondAttribute="leadingMargin" constant="-16" id="Qto-Xa-Rap"/>
+                            <constraint firstItem="c9e-nv-arC" firstAttribute="top" secondItem="mft-G7-yUs" secondAttribute="topMargin" id="Ud5-lQ-bcY"/>
+                            <constraint firstItem="4tw-Qr-hxJ" firstAttribute="top" secondItem="c9e-nv-arC" secondAttribute="bottom" id="YHm-gq-COQ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="c9e-nv-arC" secondAttribute="trailing" constant="-16" id="fQl-WF-KgM"/>
+                            <constraint firstItem="c9e-nv-arC" firstAttribute="top" secondItem="P8i-NF-SWh" secondAttribute="bottom" id="lvg-al-ZEl"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Ud5-lQ-bcY"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=compact">
+                            <mask key="constraints">
+                                <include reference="Ud5-lQ-bcY"/>
+                                <exclude reference="lvg-al-ZEl"/>
+                            </mask>
+                        </variation>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 2" id="p93-6s-sgP"/>
+                    <tabBarItem key="tabBarItem" title="Reminders" image="note-write-7.png" id="p93-6s-sgP"/>
+                    <connections>
+                        <outlet property="tableView" destination="c9e-nv-arC" id="TDH-XP-Tdm"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aAI-No-2ca" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="472" y="439"/>
+            <point key="canvasLocation" x="472" y="438"/>
         </scene>
-        <!--MapVC-->
+        <!--Map-->
         <scene sceneID="Oox-4c-46Y">
             <objects>
-                <viewController title="MapVC" id="2wQ-4W-XPV" customClass="MapVC" customModule="MadMapper" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Map" id="2wQ-4W-XPV" customClass="MapVC" customModule="MadMapper" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="q2m-Kn-WYv"/>
                         <viewControllerLayoutGuide type="bottom" id="c03-xn-JyK"/>
@@ -69,10 +156,10 @@
             </objects>
             <point key="canvasLocation" x="472" y="-223.5"/>
         </scene>
-        <!--AddReminderVC-->
+        <!--Add Reminder-->
         <scene sceneID="41N-p8-MMn">
             <objects>
-                <viewController storyboardIdentifier="AddReminderVC" title="AddReminderVC" id="UBP-pF-cNr" customClass="AddReminderVC" customModule="MadMapper" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddReminderVC" title="Add Reminder" id="UBP-pF-cNr" customClass="AddReminderVC" customModule="MadMapper" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="LWx-tz-Ffu"/>
                         <viewControllerLayoutGuide type="bottom" id="uoX-Kh-5ul"/>
@@ -148,5 +235,6 @@
     </scenes>
     <resources>
         <image name="earth-america-7.png" width="30" height="30"/>
+        <image name="note-write-7.png" width="30" height="30"/>
     </resources>
 </document>
