@@ -88,6 +88,14 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     func locationManager(manager: CLLocationManager!, didEnterRegion region: CLRegion!) {
         let regionName = region.identifier
         println("Region entered: \(regionName)")
+        
+        if (UIApplication.sharedApplication().applicationState == UIApplicationState.Background) {
+            let notification = UILocalNotification()
+            notification.alertAction = "Monitored region entered."
+            notification.alertBody = "REMINDER - You have entered the following monitored region: \(regionName)."
+            notification.fireDate = NSDate()
+            UIApplication.sharedApplication().scheduleLocalNotification(notification)
+        }
     }
     
     func locationManager(manager: CLLocationManager!, didExitRegion region: CLRegion!) {
