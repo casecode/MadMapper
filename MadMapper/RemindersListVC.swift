@@ -75,7 +75,9 @@ class RemindersListVC: UIViewController, UITableViewDataSource, UITableViewDeleg
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             let context = self.fetchedResultsController.managedObjectContext
-            context.deleteObject(self.fetchedResultsController.objectAtIndexPath(indexPath) as NSManagedObject)
+            let deletedReminder = self.fetchedResultsController.objectAtIndexPath(indexPath) as Reminder
+            NSNotificationCenter.defaultCenter().postNotificationName("ReminderDeleted", object: self, userInfo: ["reminder" : deletedReminder])
+            context.deleteObject(deletedReminder)
             
             var error: NSError? = nil
             if !context.save(&error) {

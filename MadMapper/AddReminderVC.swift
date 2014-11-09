@@ -16,7 +16,6 @@ class AddReminderVC: UIViewController {
     @IBOutlet weak var radiusTextField: UITextField!
     
     var locationManager: CLLocationManager!
-//    var selectedAnnotation: MKAnnotation!
     var selectedAnnotationView: MKAnnotationView!
     var managedObjectContext: NSManagedObjectContext!
     

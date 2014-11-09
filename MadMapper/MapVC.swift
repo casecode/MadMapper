@@ -24,6 +24,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         self.managedObjectContext = appDelegate.managedObjectContext
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reminderAdded:", name: "ReminderAdded", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reminderDeleted:", name: "ReminderDeleted", object: nil)
         
         let longPress = UILongPressGestureRecognizer(target: self, action: "didLongPressMap:")
         self.mapView.addGestureRecognizer(longPress)
@@ -76,6 +77,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
                 self.addReminderAnnotationWithTitle("Reminder set for \(reminder.name)", atCoordinate: coordinate)
                 let geoRegion = CLCircularRegion(center: coordinate, radius: reminder.radius.doubleValue, identifier: reminder.name)
                 self.addOverlayForGeoRegion(geoRegion)
+                self.locationManager.startMonitoringForRegion(geoRegion)
             }
         }
     }
@@ -96,6 +98,40 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     func addOverlayForGeoRegion(region: CLCircularRegion) {
         let overlay = MKCircle(centerCoordinate: region.center, radius: region.radius)
         self.mapView.addOverlay(overlay)
+    }
+    
+    func reminderDeleted(notification: NSNotification) {
+        if let reminder = notification.userInfo?["reminder"] as? Reminder {
+            
+            let regions = self.locationManager.monitoredRegions
+            for region in regions {
+                if region.identifier == reminder.name {
+                    self.locationManager.stopMonitoringForRegion(region as CLRegion)
+                    break
+                }
+            }
+            
+            let coordinate = reminder.coordinate()
+            let annotations = self.mapView.annotations
+            for mapAnnotation in annotations {
+                if let annotation = mapAnnotation as? MKPointAnnotation {
+                    if annotation.coordinate.latitude == coordinate.latitude && annotation.coordinate.longitude == coordinate.longitude {
+                        self.mapView.removeAnnotation(annotation)
+                        break
+                    }
+                }
+            }
+            
+            let overlays = self.mapView.overlays
+            for mapOverlay in overlays {
+                if let overlay = mapOverlay as? MKCircle {
+                    if overlay.coordinate.latitude == coordinate.latitude && overlay.coordinate.longitude == coordinate.longitude {
+                        self.mapView.removeOverlay(overlay)
+                        break
+                    }
+                }
+            }
+        }
     }
     
     // MARK: - CLLocationManagerDelegate
