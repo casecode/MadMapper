@@ -188,7 +188,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="cancelReminder:" destination="UBP-pF-cNr" eventType="touchUpInside" id="xpc-i7-Mjd"/>
+                                    <action selector="dismissAddReminderScreen:" destination="UBP-pF-cNr" eventType="touchUpInside" id="T50-hO-zsd"/>
                                 </connections>
                             </button>
                         </subviews>

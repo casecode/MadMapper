@@ -52,10 +52,11 @@ class AddReminderVC: UIViewController {
         let info = ["region" : geoRegion]
         NSNotificationCenter.defaultCenter().postNotificationName("ReminderAdded", object: self, userInfo: info)
         
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismissAddReminderScreen(nil)
     }
     
-    @IBAction func cancelReminder(sender: AnyObject) {
+    @IBAction func dismissAddReminderScreen(sender: AnyObject?) {
+        self.resignFirstResponder()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
