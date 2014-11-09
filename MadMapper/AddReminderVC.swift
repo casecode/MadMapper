@@ -41,11 +41,7 @@ class AddReminderVC: UIViewController {
         self.locationManager.startMonitoringForRegion(geoRegion)
         
         let reminder = NSEntityDescription.insertNewObjectForEntityForName("Reminder", inManagedObjectContext: self.managedObjectContext) as Reminder
-        reminder.name = reminderName
-        reminder.createdDate = NSDate()
-        reminder.latitude = self.selectedAnnotation.coordinate.latitude
-        reminder.longitude = self.selectedAnnotation.coordinate.longitude
-        reminder.radius = reminderRadius
+        reminder.setAttributes(name: reminderName, centerCoordinate: geoRegion.center, radius: reminderRadius)
         
         var error: NSError? = nil
         self.managedObjectContext.save(&error)
