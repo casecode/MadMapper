@@ -15,16 +15,12 @@ class RemindersListVC: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     var managedObjectContext: NSManagedObjectContext!
     var fetchedResultsController: NSFetchedResultsController!
-    
-    let _dateFormatter = NSDateFormatter()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
         self.managedObjectContext = appDelegate.managedObjectContext
-        
-        self._dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didGetCloudChanges:", name: NSPersistentStoreDidImportUbiquitousContentChangesNotification, object: appDelegate.persistentStoreCoordinator)
         
@@ -41,10 +37,6 @@ class RemindersListVC: UIViewController, UITableViewDataSource, UITableViewDeleg
         if !self.fetchedResultsController.performFetch(&error) {
             println("Error fetching reminders: \(error?.localizedDescription)")
         }
-    }
-    
-    func dateFormatter() -> NSDateFormatter {
-        return self._dateFormatter
     }
 
     func didGetCloudChanges(notification: NSNotification) {
@@ -63,10 +55,16 @@ class RemindersListVC: UIViewController, UITableViewDataSource, UITableViewDeleg
         return cell
     }
     
+    lazy var dateFormatter: NSDateFormatter = {
+        let formatter = NSDateFormatter()
+        formatter.dateStyle = NSDateFormatterStyle.MediumStyle
+        return formatter
+    }()
+    
     func configureCell(cell: ReminderCell, atIndexPath indexPath: NSIndexPath) {
         if let reminder = self.fetchedResultsController.fetchedObjects?[indexPath.row] as? Reminder {
             cell.reminderNameLabel.text = reminder.name
-            cell.createdDateLabel.text = self.dateFormatter().stringFromDate(reminder.createdDate)
+            cell.createdDateLabel.text = self.dateFormatter.stringFromDate(reminder.createdDate)
         }
     }
     
