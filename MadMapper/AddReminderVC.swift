@@ -16,7 +16,8 @@ class AddReminderVC: UIViewController {
     @IBOutlet weak var radiusTextField: UITextField!
     
     var locationManager: CLLocationManager!
-    var selectedAnnotation: MKAnnotation!
+//    var selectedAnnotation: MKAnnotation!
+    var selectedAnnotationView: MKAnnotationView!
     var managedObjectContext: NSManagedObjectContext!
     
     override func viewDidLoad() {
@@ -37,7 +38,9 @@ class AddReminderVC: UIViewController {
         let inputRadius = NSString(string: self.radiusTextField.text).doubleValue
         if inputRadius > 0 { reminderRadius = inputRadius }
         
-        let geoRegion = CLCircularRegion(center: self.selectedAnnotation.coordinate, radius: reminderRadius, identifier: reminderName)
+        let annotation = self.selectedAnnotationView.annotation as MKPointAnnotation
+        
+        let geoRegion = CLCircularRegion(center: annotation.coordinate, radius: reminderRadius, identifier: reminderName)
         self.locationManager.startMonitoringForRegion(geoRegion)
         
         let reminder = NSEntityDescription.insertNewObjectForEntityForName("Reminder", inManagedObjectContext: self.managedObjectContext) as Reminder
@@ -48,6 +51,9 @@ class AddReminderVC: UIViewController {
         if (error != nil) {
             println("Error saving reminder: \(error?.localizedDescription)")
         }
+        
+        annotation.title = "Reminder set for \(reminderName)"
+        self.selectedAnnotationView.rightCalloutAccessoryView = nil
         
         let info = ["region" : geoRegion]
         NSNotificationCenter.defaultCenter().postNotificationName("ReminderAdded", object: self, userInfo: info)

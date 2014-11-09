@@ -21,15 +21,15 @@ class Reminder: NSManagedObject {
 }
 
 extension Reminder {
-    func setAttributes(#name: String, centerCoordinate center: CLLocationCoordinate2D, radius: Double) {
+    func setAttributes(#name: String, centerCoordinate coordinate: CLLocationCoordinate2D, radius: Double) {
         self.name = name
-        self.latitude = center.latitude
-        self.longitude = center.longitude
+        self.latitude = coordinate.latitude
+        self.longitude = coordinate.longitude
         self.radius = radius
         self.createdDate = NSDate()
     }
     
-    func centerCoordinate() -> CLLocationCoordinate2D {
+    func coordinate() -> CLLocationCoordinate2D {
         return CLLocationCoordinate2DMake(self.latitude.doubleValue, self.longitude.doubleValue)
     }
 }

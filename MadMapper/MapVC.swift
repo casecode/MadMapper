@@ -8,15 +8,20 @@
 
 import UIKit
 import MapKit
+import CoreData
 
 class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
     
     let locationManager = CLLocationManager()
+    var managedObjectContext: NSManagedObjectContext!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        self.managedObjectContext = appDelegate.managedObjectContext
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reminderAdded:", name: "ReminderAdded", object: nil)
         
@@ -40,6 +45,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             println("Authorized")
             //self.locationManager.startUpdatingLocation()
             self.mapView.showsUserLocation = true
+            self.addStoredRemindersToMap()
         case .NotDetermined:
             println("Not Determined")
             self.locationManager.requestAlwaysAuthorization()
@@ -56,19 +62,40 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         if sender.state == UIGestureRecognizerState.Began {
             let touchPoint = sender.locationInView(self.mapView)
             let touchCoordinate = self.mapView.convertPoint(touchPoint, toCoordinateFromView: self.mapView)
+            self.addReminderAnnotationWithTitle("Add Reminder", atCoordinate: touchCoordinate)
+        }
+    }
+    
+    func addStoredRemindersToMap() {
+        let fetchRequest = NSFetchRequest(entityName: "Reminder")
+        var error: NSError? = nil
+        if let reminders = self.managedObjectContext.executeFetchRequest(fetchRequest, error: &error) as? [Reminder] {
             
-            let annontation = MKPointAnnotation()
-            annontation.coordinate = touchCoordinate
-            annontation.title = "Add Reminder"
-            self.mapView.addAnnotation(annontation)
+            for reminder in reminders {
+                let coordinate = reminder.coordinate()
+                self.addReminderAnnotationWithTitle("Reminder set for \(reminder.name)", atCoordinate: coordinate)
+                let geoRegion = CLCircularRegion(center: coordinate, radius: reminder.radius.doubleValue, identifier: reminder.name)
+                self.addOverlayForGeoRegion(geoRegion)
+            }
         }
     }
     
     func reminderAdded(notification: NSNotification) {
         if let geoRegion = notification.userInfo?["region"] as? CLCircularRegion {
-            let overlay = MKCircle(centerCoordinate: geoRegion.center, radius: geoRegion.radius)
-            self.mapView.addOverlay(overlay)
+            self.addOverlayForGeoRegion(geoRegion)
         }
+    }
+    
+    func addReminderAnnotationWithTitle(title: String, atCoordinate coordinate: CLLocationCoordinate2D) {
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = coordinate
+        annotation.title = title
+        self.mapView.addAnnotation(annotation)
+    }
+    
+    func addOverlayForGeoRegion(region: CLCircularRegion) {
+        let overlay = MKCircle(centerCoordinate: region.center, radius: region.radius)
+        self.mapView.addOverlay(overlay)
     }
     
     // MARK: - CLLocationManagerDelegate
@@ -80,6 +107,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         case .Authorized:
             println("Authorized")
             //self.locationManager.startUpdatingLocation()
+            self.addStoredRemindersToMap()
         default:
             println("Default")
         }
@@ -113,18 +141,20 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     // MARK: - MKMapViewDelegate
     
     func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
-        let annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "AddReminderAnnotation")
+        let annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "ReminderAnnotation")
         annotationView.animatesDrop = true
         annotationView.canShowCallout = true
-        let addReminderButton = UIButton.buttonWithType(UIButtonType.ContactAdd) as UIButton
-        annotationView.rightCalloutAccessoryView = addReminderButton
+        if annotation.title == "Add Reminder" {
+            let addReminderButton = UIButton.buttonWithType(UIButtonType.ContactAdd) as UIButton
+            annotationView.rightCalloutAccessoryView = addReminderButton
+        }
         return annotationView
     }
     
     func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, calloutAccessoryControlTapped control: UIControl!) {
         let addReminderVC = self.storyboard?.instantiateViewControllerWithIdentifier("AddReminderVC") as AddReminderVC
         addReminderVC.locationManager = self.locationManager
-        addReminderVC.selectedAnnotation = view.annotation
+        addReminderVC.selectedAnnotationView = view
         self.presentViewController(addReminderVC, animated: true, completion: nil)
     }
     
